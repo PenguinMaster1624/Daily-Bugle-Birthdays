@@ -1,4 +1,4 @@
-from Utils.errors import BirthdayNotFoundError
+from Utils.errors import UserNotFoundError
 from Utils.logger_config import logger
 from discord import app_commands
 from discord.ext import commands
@@ -20,15 +20,15 @@ class DeleteBirthday(commands.Cog):
             
             try:
                 if not user:
-                    await interaction.response.send_message('You aren\'t in my database, can\'t delete what doesn\'t exist!', ephemeral = True)
-                    raise BirthdayNotFoundError(interaction.user.name)
+                    raise UserNotFoundError(interaction.user.name)
             
-            except BirthdayNotFoundError as error:
+            except UserNotFoundError as error:
                 logger.error(error)
+                await interaction.response.send_message(error, ephemeral=True)
                 return
 
             cursor.execute('DELETE FROM Birthdays WHERE DiscordID = ?', (interaction.user.id,))
-            await interaction.response.send_message('Successfully struck your birthday from my database')
+            await interaction.response.send_message('Successfully struck your birthday from my database', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):

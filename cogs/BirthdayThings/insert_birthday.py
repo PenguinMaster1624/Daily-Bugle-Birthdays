@@ -1,3 +1,4 @@
+from Utils.errors import UserExistsError
 from Utils.logger_config import logger
 from datetime import date, datetime
 from discord import app_commands
@@ -16,7 +17,7 @@ class InsertBirthday(commands.Cog):
     async def insert_birthday(self, interaction: discord.Interaction, month: int, day: int) -> None:
         try:
             date(year=datetime.now().year, month=month, day=day)
-        
+
         except ValueError as error:
             logger.error(error)
             await interaction.response.send_message(error, ephemeral=True)
@@ -26,11 +27,17 @@ class InsertBirthday(commands.Cog):
             cursor = db.cursor()
 
             user = list(cursor.execute('SELECT * FROM Birthdays WHERE DiscordID = ?', (interaction.user.id,)))
-            if user:
-                await interaction.response.send_message('Your birthday already exists in the database. Use the `/update` command if you want to update it')
+            try:
+                if user:
+                    raise UserExistsError(interaction.user.name)
+
+            except UserExistsError as error:
+                logger.error(error)
+                await interaction.response.send_message(error, ephemeral=True)
                 return
-            
-            cursor.execute(f'INSERT INTO Birthdays(?,?,?)', (interaction.user.id, interaction.user.name, f'{month}-{day}'))
+
+            cursor.execute('INSERT INTO Birthdays(DiscordID, birthday) VALUES (?, ?)', (interaction.user.id, f'{month}-{day}'))
+            await interaction.response.send_message('Birthday successfully logged into database', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):
