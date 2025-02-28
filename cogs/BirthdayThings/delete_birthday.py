@@ -28,7 +28,8 @@ class DeleteBirthday(commands.Cog):
                 return
 
             cursor.execute('DELETE FROM Birthdays WHERE DiscordID = ?', (interaction.user.id,))
-            await interaction.response.send_message('Successfully struck your birthday from my database', ephemeral=True)
+        
+        await interaction.response.send_message('Successfully struck your birthday from my database', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):
