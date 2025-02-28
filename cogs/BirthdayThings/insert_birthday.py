@@ -38,7 +38,7 @@ class InsertBirthday(commands.Cog):
 
             cursor.execute('INSERT INTO Birthdays(DiscordID, birthday) VALUES (?, ?)', (interaction.user.id, f'{month}-{day}'))
         
-        await interaction.response.send_message('Birthday successfully logged into database', ephemeral=True)
+        await interaction.response.send_message(f'Birthday successfully logged into database as {month}-{day}', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):

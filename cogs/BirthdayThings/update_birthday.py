@@ -37,7 +37,8 @@ class UpdateBirthday(commands.Cog):
 
             cursor.execute('UPDATE Birthdays SET birthday = ? WHERE DiscordID = ?', (f'{month}-{day}', interaction.user.id))
 
-        await interaction.response.send_message('Birthday successfully changed')
+        await interaction.response.send_message(f'Birthday successfully changed to {month}-{day}', ephemeral=True)
+
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(UpdateBirthday(bot))
