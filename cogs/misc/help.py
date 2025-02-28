@@ -8,7 +8,7 @@ class Help(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name='help', description='Shows what other commands I have')
-    async def help(self) -> None:
+    async def help(self, interaction: discord.Interaction) -> None:
         pass
 
 

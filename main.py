@@ -5,9 +5,6 @@ from discord.ext import commands
 import discord
 import os
 
-
-
-
 class BirthdayBot(commands.Bot):
     def __init__(self) -> None:
         intents = discord.Intents.default()
@@ -28,7 +25,7 @@ class BirthdayBot(commands.Bot):
     async def on_ready(self) -> None:
         try:
             await package_check()
-            print('Pybot at your service')
+            print('Birthday Bot at your service')
 
         except OutdatedPackageError as error:
             logger.warning(error)
