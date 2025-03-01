@@ -46,5 +46,10 @@ class BirthdayPing(commands.Cog):
                 await channel.send(birthday_message)
 
 
+    @birthday_ping.before_loop
+    async def before_birthday_ping_loop(self) -> None:
+        await self.bot.wait_until_ready()
+
+
 async def setup(bot: commands.Bot):
     await bot.add_cog(BirthdayPing(bot))
