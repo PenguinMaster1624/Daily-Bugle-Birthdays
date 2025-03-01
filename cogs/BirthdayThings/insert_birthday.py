@@ -3,6 +3,7 @@ from Utils.logger_config import logger
 from datetime import date, datetime
 from discord import app_commands
 from discord.ext import commands
+import calendar
 import discord
 import sqlite3
 import os
@@ -38,7 +39,7 @@ class InsertBirthday(commands.Cog):
 
             cursor.execute('INSERT INTO Birthdays(DiscordID, birthday) VALUES (?, ?)', (interaction.user.id, f'{month}-{day}'))
         
-        await interaction.response.send_message(f'Birthday successfully logged into database as {month}-{day}', ephemeral=True)
+        await interaction.response.send_message(f'Birthday successfully logged into database as {calendar.month_name[month]} {day}', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):

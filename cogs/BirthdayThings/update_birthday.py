@@ -3,6 +3,7 @@ from Utils.logger_config import logger
 from datetime import datetime, date
 from discord import app_commands
 from discord.ext import commands
+import calendar
 import discord
 import sqlite3
 import os
@@ -37,7 +38,7 @@ class UpdateBirthday(commands.Cog):
 
             cursor.execute('UPDATE Birthdays SET birthday = ? WHERE DiscordID = ?', (f'{month}-{day}', interaction.user.id))
 
-        await interaction.response.send_message(f'Birthday successfully changed to {month}-{day}', ephemeral=True)
+        await interaction.response.send_message(f'Birthday successfully changed to {calendar.month_name[month]} {day}', ephemeral=True)
 
 
 async def setup(bot: commands.Bot):
