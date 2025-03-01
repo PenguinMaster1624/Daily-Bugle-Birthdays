@@ -4,4 +4,4 @@ __pycache__
 discord.log
 birthdays.db
 cogs/*/__pycache__/*.pyc
-cogs/misc/temp.py
+channels.json
